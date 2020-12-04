@@ -3,8 +3,8 @@
 		passwordValidation: function(_options, _callback, _confirmcallback) {
 			//var _unicodeSpecialSet = "^\\x00-\\x1F\\x7F\\x80-\\x9F0-9A-Za-z"; //All chars other than above (and C0/C1)
 			var CHARSETS = {
-				upperCaseSet: "A-Z", 	//All UpperCase (Acii/Unicode)
-				lowerCaseSet: "a-z", 	//All LowerCase (Acii/Unicode)
+				upperCaseSet: "A-Z", 	//All UpperCase (Ascii/Unicode)
+				lowerCaseSet: "a-z", 	//All LowerCase (Ascii/Unicode)
 				digitSet: "0-9", 		//All digits (Acii/Unicode)
 				specialSet: "\\x20-\\x2F\\x3A-\\x40\\x5B-\\x60\\x7B-\\x7E\\x80-\\xFF", //All Other printable Ascii
 			}
@@ -14,9 +14,9 @@
 				minLowerCase: 2,	  //Minimum number of Lower Case Letters characters in password
 				minDigits: 2,		  //Minimum number of digits characters in password
 				minSpecial: 2,		  //Minimum number of special characters in password
-				maxRepeats: 5,		  //Maximum number of repeated alphanumeric characters in password dhgurAAAfjewd <- 3 A's
+				maxRepeats: 2,		  //Maximum number of repeated alphanumeric characters in password dhgurAAAfjewd <- 3 A's
 				maxConsecutive: 3,	  //Maximum number of alphanumeric characters from one set back to back
-				noUpper: false,		  //Disallow Upper Case Lettera
+				noUpper: false,		  //Disallow Upper Case Letters
 				noLower: false,		  //Disallow Lower Case Letters
 				noDigit: false,		  //Disallow Digits
 				noSpecial: false,	  //Disallow Special Characters
