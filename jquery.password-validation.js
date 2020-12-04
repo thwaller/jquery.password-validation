@@ -3,26 +3,27 @@
 		passwordValidation: function(_options, _callback, _confirmcallback) {
 			//var _unicodeSpecialSet = "^\\x00-\\x1F\\x7F\\x80-\\x9F0-9A-Za-z"; //All chars other than above (and C0/C1)
 			var CHARSETS = {
-				upperCaseSet: "A-Z", 	//All UpperCase (Ascii/Unicode)
-				lowerCaseSet: "a-z", 	//All LowerCase (Ascii/Unicode)
-				digitSet: "0-9", 		//All digits (Ascii/Unicode)
+				upperCaseSet: "A-Z",	//All UpperCase (Ascii/Unicode)
+				lowerCaseSet: "a-z",	//All LowerCase (Ascii/Unicode)
+				digitSet: "0-9",		//All digits (Ascii/Unicode)
 				specialSet: "\\x20-\\x2F\\x3A-\\x40\\x5B-\\x60\\x7B-\\x7E\\x80-\\xFF", //All Other printable Ascii
 			}
 			var _defaults = {
-				minLength: 12,		  //Minimum Length of password 
-				minUpperCase: 2,	  //Minimum number of Upper Case Letters characters in password
-				minLowerCase: 2,	  //Minimum number of Lower Case Letters characters in password
-				minDigits: 2,		  //Minimum number of digits characters in password
-				minSpecial: 2,		  //Minimum number of special characters in password
-				maxRepeats: 2,		  //Maximum number of repeated alphanumeric characters in password dhgurAAAfjewd <- 3 A's
-				maxConsecutive: 3,	  //Maximum number of alphanumeric characters from one set back to back
-				noUpper: false,		  //Disallow Upper Case Letters
-				noLower: false,		  //Disallow Lower Case Letters
-				noDigit: false,		  //Disallow Digits
-				noSpecial: false,	  //Disallow Special Characters
-				//NOT IMPLEMENTED YET allowUnicode: false,  //Switches Ascii Special Set out for Unicode Special Set 
-				failRepeats: true,    //Disallow user to have x number of repeated alphanumeric characters ex.. ..A..a..A.. <- fails if maxRepeats <= 3 CASE INSENSITIVE
-				failConsecutive: true,//Disallow user to have x number of consecutive alphanumeric characters from any set ex.. abc <- fails if maxConsecutive <= 3
+				minLength: 12,			//Minimum Length of password 
+				minUpperCase: 2,		//Minimum number of Upper Case Letters characters in password
+				minLowerCase: 2,		//Minimum number of Lower Case Letters characters in password
+				minDigits: 2,			//Minimum number of digits characters in password
+				minSpecial: 2,			//Minimum number of special characters in password
+				maxRepeats: 2,			//Maximum number of repeated alphanumeric characters in password dhgurAAAfjewd <- 3 A's
+				maxConsecutive: 3,		//Maximum number of alphanumeric characters from one set back to back
+				noUpper: false,			//Disallow Upper Case Letters
+				noLower: false,			//Disallow Lower Case Letters
+				noDigit: false,			//Disallow Digits
+				noSpecial: false,		//Disallow Special Characters
+				//NOT IMPLEMENTED YET
+				//allowUnicode: false,	//Switches Ascii Special Set out for Unicode Special Set 
+				failRepeats: true,		//Disallow user to have x number of repeated alphanumeric characters ex.. ..A..a..A.. <- fails if maxRepeats <= 3 CASE INSENSITIVE
+				failConsecutive: true,	//Disallow user to have x number of consecutive alphanumeric characters from any set ex.. abc <- fails if maxConsecutive <= 3
 				confirmField: undefined
 			};
 
