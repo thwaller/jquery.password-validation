@@ -2,12 +2,14 @@
 	$.fn.extend({
 		passwordValidation: function(_options, _callback, _confirmcallback) {
 			var CHARSETS = {
-				upperCaseSet:	"A-Z",	//All UpperCase (Ascii/Unicode)
-				lowerCaseSet:	"a-z",	//All LowerCase (Ascii/Unicode)
-				numericSet:		"0-9",		//All numeric (Ascii/Unicode)
+				//Addressing the full UTF8 encoding table U+0000 to U+00FF (x00 to xFF)
+				upperCaseSet:	"A-Z",	//All UpperCase (Ascii/Unicode) x41 to x5A
+				lowerCaseSet:	"a-z",	//All LowerCase (Ascii/Unicode) x61 to x7A
+				numericSet:		"0-9",	//All numeric (Ascii/Unicode) x30 to x39
 				specialSet:		"\x21\x23-\x26\x28-\x2E\x3A-\x40\x5B-\x5F\x7B-\x7E", //Standard special characters
-				extendedSet:	"\x80-\xFF", //Extended UTF8 characters
-				problemSet:		"\x20\x22\x27\x2F\x5C\x60" //the characters of space, double quote, single quote, slash, backslash, grave/accent
+				extendedSet:	"\xA1-\xFF", //Extended UTF8 characters
+				problemSet:		"\x20\x22\x27\x2F\x5C\x60\xA0", //the characters of space, double quote, single quote, slash, backslash, grave accent
+				deadSet:		"\x00-\x1F\x80-\x9F" //unused UTF8 hex for control
 			};
 			var _defaults = {
 				minLength: 12,			//Minimum Length of password 
@@ -17,14 +19,14 @@
 				minSpecial: 2,			//Minimum number of special characters in password
 				minExtended: 0,			//Minimum number of extended UTF8 characters
 				minProblem: 0,			//Minimum number of problem characters
-				maxRepeats: 3,			//Maximum number of repeated alphanumeric characters in password dhgurAAAfjewd <- 3 A's
+				maxRepeats: 2,			//Maximum number of repeated alphanumeric characters in password dhgurAAAfjewd <- 3 A's
 				maxConsecutive: 1,		//Maximum number of alphanumeric characters from one set back to back
 				noUpper: false,			//Disallow Upper Case Letters
 				noLower: false,			//Disallow Lower Case Letters
 				noNumeric: false,		//Disallow Numeric
 				noSpecial: false,		//Disallow Special Characters
-				noExtended: true,		//Disallow Extended UTF8 Characters
-				noProblem: true,		//Disallow Problem Characters
+				noExtended: false,		//Disallow Extended UTF8 Characters
+				noProblem: false,		//Disallow Problem Characters
 				failRepeats: true,		//Disallow user to have x number of repeated alphanumeric characters ex.. ..A..a..A.. <- fails if maxRepeats <= 3 CASE INSENSITIVE
 				failConsecutive: true,	//Disallow user to have x number of consecutive alphanumeric characters from any set ex.. abc <- fails if maxConsecutive <= 3
 				confirmField: undefined
