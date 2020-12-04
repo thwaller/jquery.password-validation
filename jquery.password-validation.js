@@ -5,7 +5,7 @@
 			var CHARSETS = {
 				upperCaseSet: "A-Z", 	//All UpperCase (Ascii/Unicode)
 				lowerCaseSet: "a-z", 	//All LowerCase (Ascii/Unicode)
-				digitSet: "0-9", 		//All digits (Acii/Unicode)
+				digitSet: "0-9", 		//All digits (Ascii/Unicode)
 				specialSet: "\\x20-\\x2F\\x3A-\\x40\\x5B-\\x60\\x7B-\\x7E\\x80-\\xFF", //All Other printable Ascii
 			}
 			var _defaults = {
