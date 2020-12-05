@@ -1,6 +1,10 @@
 # jquery.password-validation
 
-JQuery plugin for password validation per a defined rule set. The requirements are listed out and will disappear as the conditions are met, during which the field boxes will be red. When the conditions are all met, the field boxes will be green and the password is valid. The HTML is provided simply to test the code and needs to be adjusted depending on how you want to implement.
+JQuery plugin for password validation per a defined rule set.
+
+## Purpose
+
+The goal is to provide a base for those in need of policy enforcement on passwords. Provide a large set of customization options and criteria that can be set, enabled or disabled as needed to provide a universal and scalable piece of code. The HTML file provides entry for the password and verification of password, along with a dynamic criteria satisfaction list. The requirements are listed out and will disappear as the conditions are met, during which the field boxes will be red. When the conditions are all met, the field boxes will be green and the password is valid. The HTML is provided simply to test the code and needs to be adjusted depending on how you want to implement.
 
 ## Character Sets
 
