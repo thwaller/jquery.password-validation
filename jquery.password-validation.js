@@ -2,35 +2,45 @@
 	$.fn.extend({
 		passwordValidation: function(_options, _callback, _confirmcallback) {
 			var CHARSETS = {
-				//Addressing the full UTF8 encoding table U+0000 to U+00FF (x00 to xFF) into logical groups
-				upperCaseSet:	"A-Z",	//All UpperCase (Ascii/Unicode) x41 to x5A
-				lowerCaseSet:	"a-z",	//All LowerCase (Ascii/Unicode) x61 to x7A
-				numericSet:		"0-9",	//All numeric (Ascii/Unicode) x30 to x39
-				specialSet:		"\x21\x23-\x26\x28-\x2E\x3A-\x40\x5B-\x5F\x7B-\x7E", //Standard special characters
-				extendedSet:	"\xA1-\xFF", //Extended UTF8 characters
-				problemSet:		"\x20\x22\x27\x2F\x5C\x60\xA0", //the characters of space, double quote, single quote, slash, backslash, grave accent
-				deadSet:		"\x00-\x1F\x80-\x9F" //unused UTF8 hex for control
+				//Addressing the UTF8 encoding table U+0000 to U+00FF (x00 to xFF) into logical groups
+				//All UpperCase x41 to x5A
+				upperCaseSet:	"A-Z",
+				//All LowerCase x61 to x7A
+				lowerCaseSet:	"a-z",
+				//All numeric x30 to x39
+				numericSet:		"0-9",
+				//Standard special characters
+				specialSet:		"\x21\x23-\x26\x28-\x2E\x3A-\x40\x5B-\x5F\x7B-\x7E",
+				//Extended UTF8 characters
+				extendedSet:	"\xA1-\xFF",
+				//Space, double quote, single quote, slash, backslash, grave accent
+				problemSet:		"\x20\x22\x27\x2F\\x5C\x60\xA0",
+				//Unused UTF8 hex for control
+				deadSet:		"\x00-\x1F\x80-\x9F",
+				//Combined character sets for grouping
+				//All upper, lower letters and numbers
+				alphaNumericSet:	"0-9a-zA-Z"
 			};
 			var _defaults = {
 				minLength: 12,			//Minimum Length of password 
-				minUpperCase: 2,		//Minimum number of Upper Case Letters characters in password
-				minLowerCase: 2,		//Minimum number of Lower Case Letters characters in password
-				minNumeric: 2,			//Minimum number of digits characters in password
-				minSpecial: 2,			//Minimum number of special characters in password
+				minUpperCase: 2,		//Minimum number of upper case letter characters
+				minLowerCase: 2,		//Minimum number of lower case letter characters
+				minNumeric: 2,			//Minimum number of numeric characters
+				minSpecial: 2,			//Minimum number of special characters
 				minExtended: 0,			//Minimum number of extended UTF8 characters
 				minProblem: 0,			//Minimum number of problem characters
-				maxRepeats: 2,			//Maximum number of repeated alphanumeric characters in password ___RRR____
-				maxConsecutive: 1,		//Maximum number of alphanumeric characters from one set back to back
-				limitFirst: false,		//TODO First Letter setting of either allow or disallow character sets as defined above
-				limitLast: false,		//TODO Last Letter setting of either allow or disallow character sets as defined above
-				noUpper: false,			//Disallow Upper Case Letters
-				noLower: false,			//Disallow Lower Case Letters
-				noNumeric: false,		//Disallow Numeric Characters
-				noSpecial: false,		//Disallow Special Characters
-				noExtended: false,		//Disallow Extended UTF8 Characters
-				noProblem: true,		//Disallow Problem Characters
-				failRepeats: true,		//Disallow user to have x number of repeated alphanumeric characters ex.. ..A..a..A.. <- fails if maxRepeats <= 3 CASE INSENSITIVE
-				failConsecutive: true,	//Disallow user to have x number of consecutive alphanumeric characters from any set ex.. abc <- fails if maxConsecutive <= 3
+				maxRepeats: 2,			//Maximum number of repeated characters
+				maxConsecutive: 2,		//Maximum number of characters from one set back to back
+				//limitFirst: false,	//TODO First character restricted to alphaNumericSet
+				//limitLast: false,		//TODO Last character restricted to alphaNumericSet
+				noUpper: false,			//Disallow upper case letters
+				noLower: false,			//Disallow lower case letters
+				noNumeric: false,		//Disallow numeric characters
+				noSpecial: false,		//Disallow special characters
+				noExtended: false,		//Disallow extended UTF8 characters
+				noProblem: true,		//Disallow problem characters
+				failRepeats: true,		//Disallow x number of repeated characters, case insensitive
+				failConsecutive: true,	//Disallow x number of consecutive characters, case insensitive
 				confirmField: undefined
 			};
 
@@ -109,11 +119,12 @@
 					}
 				});
 
-				if(_options.failRepeats && $(_element).val().search(new RegExp("(.)" + (".*\\1").repeat(_options.maxRepeats - 1), "gi")) != -1) {
-					failedCases.push("Password can not contain " + _options.maxRepeats + " of the same character case insensitive.");
+				if(_options.failRepeats && $(_element).val().search(new RegExp("(.)" + (".*\\1").repeat(_options.maxRepeats), "gi")) != -1) {
+					failedCases.push("Password can not contain more than " + _options.maxRepeats + " of the same character case insensitive.");
 				}
 
-				if(_options.failConsecutive && $(_element).val().search(new RegExp("(?=(.)" + ("\\1").repeat(_options.maxConsecutive) + ")", "g")) != -1) {
+				//TODO NOT WORKING
+				if(_options.failConsecutive && $(_element).val().search(new RegExp("(?=(.)" + ("\\1").repeat(_options.maxConsecutive) + ")", "gi")) != -1) {
 					failedCases.push("Password can not contain the same character more than " + _options.maxConsecutive + " times in a row.");
 				}
 				
