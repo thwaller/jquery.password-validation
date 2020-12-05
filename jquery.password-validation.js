@@ -2,7 +2,7 @@
 	$.fn.extend({
 		passwordValidation: function(_options, _callback, _confirmcallback) {
 			var CHARSETS = {
-				//Addressing the full UTF8 encoding table U+0000 to U+00FF (x00 to xFF)
+				//Addressing the full UTF8 encoding table U+0000 to U+00FF (x00 to xFF) into logical groups
 				upperCaseSet:	"A-Z",	//All UpperCase (Ascii/Unicode) x41 to x5A
 				lowerCaseSet:	"a-z",	//All LowerCase (Ascii/Unicode) x61 to x7A
 				numericSet:		"0-9",	//All numeric (Ascii/Unicode) x30 to x39
@@ -19,14 +19,16 @@
 				minSpecial: 2,			//Minimum number of special characters in password
 				minExtended: 0,			//Minimum number of extended UTF8 characters
 				minProblem: 0,			//Minimum number of problem characters
-				maxRepeats: 2,			//Maximum number of repeated alphanumeric characters in password dhgurAAAfjewd <- 3 A's
+				maxRepeats: 2,			//Maximum number of repeated alphanumeric characters in password ___RRR____
 				maxConsecutive: 1,		//Maximum number of alphanumeric characters from one set back to back
-				noUpper: false,			//Disallow Upper Case Letters
-				noLower: false,			//Disallow Lower Case Letters
-				noNumeric: false,		//Disallow Numeric
-				noSpecial: false,		//Disallow Special Characters
-				noExtended: false,		//Disallow Extended UTF8 Characters
-				noProblem: false,		//Disallow Problem Characters
+				//restrictFirst: false,	//TODO First Letter setting of either allow or disallow character sets as defined above
+				//restrictLast: false,	//TODO Last Letter setting of either allow or disallow character sets as defined above
+				//noUpper: false,			//Disallow Upper Case Letters
+				//noLower: false,			//Disallow Lower Case Letters
+				//noNumeric: false,		//Disallow Numeric Characters
+				//noSpecial: false,		//Disallow Special Characters
+				//noExtended: false,		//Disallow Extended UTF8 Characters
+				//noProblem: false,		//Disallow Problem Characters
 				failRepeats: true,		//Disallow user to have x number of repeated alphanumeric characters ex.. ..A..a..A.. <- fails if maxRepeats <= 3 CASE INSENSITIVE
 				failConsecutive: true,	//Disallow user to have x number of consecutive alphanumeric characters from any set ex.. abc <- fails if maxConsecutive <= 3
 				confirmField: undefined
@@ -56,38 +58,38 @@
 			function buildPasswordRegex() {
 				var cases = [];
 
-				if(_options.noUpper) 	cases.push({"regex": "(?=" + CHARSETS.upperCaseSet + ")",
-													"message": "Password can not contain an Upper Case Letter"});
-				else 	cases.push({"regex": "(?=" + ("[" + CHARSETS.upperCaseSet + "][^" + CHARSETS.upperCaseSet + "]*").repeat(_options.minUpperCase) + ")",
-									"message": "Password must contain at least " + _options.minUpperCase + " Upper Case Letters."});
+				//if(_options.noUpper) 	cases.push({"regex": "(?=" + CHARSETS.upperCaseSet + ")",
+				//									"message": "Password can not contain an Upper Case letter"});
+				/* else */ 	cases.push({"regex": "(?=" + ("[" + CHARSETS.upperCaseSet + "][^" + CHARSETS.upperCaseSet + "]*").repeat(_options.minUpperCase) + ")",
+									"message": "Password must contain at least " + _options.minUpperCase + " Upper Case letters."});
 				
-				if(_options.noLower) 	cases.push({"regex": "(?=" + CHARSETS.lowerCaseSet + ")",
-													"message": "Password can not contain a Lower Case Letter"});
-				else 	cases.push({"regex": "(?=" + ("[" + CHARSETS.lowerCaseSet + "][^" + CHARSETS.lowerCaseSet + "]*").repeat(_options.minLowerCase) + ")",
-									"message": "Password must contain at least " + _options.minLowerCase + " Lower Case Letters."});
+				//if(_options.noLower) 	cases.push({"regex": "(?=" + CHARSETS.lowerCaseSet + ")",
+				//									"message": "Password can not contain a Lower Case letter"});
+				/* else */ 	cases.push({"regex": "(?=" + ("[" + CHARSETS.lowerCaseSet + "][^" + CHARSETS.lowerCaseSet + "]*").repeat(_options.minLowerCase) + ")",
+									"message": "Password must contain at least " + _options.minLowerCase + " Lower Case letters."});
 				
-				if(_options.noNumeric) 	cases.push({"regex": "(?=" + CHARSETS.numericSet + ")",
-													"message": "Password can not contain a Number"});
-				else 	cases.push({"regex": "(?=" + ("[" + CHARSETS.numericSet + "][^" + CHARSETS.numericSet + "]*").repeat(_options.minNumeric) + ")",
+				//if(_options.noNumeric) 	cases.push({"regex": "(?=" + CHARSETS.numericSet + ")",
+				//									"message": "Password can not contain a Number"});
+				/* else */ 	cases.push({"regex": "(?=" + ("[" + CHARSETS.numericSet + "][^" + CHARSETS.numericSet + "]*").repeat(_options.minNumeric) + ")",
 									"message": "Password must contain at least " + _options.minNumeric + " Digits."});
 				
-				if(_options.noSpecial) 	cases.push({"regex": "(?=" + CHARSETS.specialSet + ")",
-													"message": "Password can not contain a Special Character"});
-				else 	cases.push({"regex": "(?=" + ("[" + CHARSETS.specialSet + "][^" + CHARSETS.specialSet + "]*").repeat(_options.minSpecial) + ")",
-									"message": "Password must contain at least " + _options.minSpecial + " Special Characters."});
+				//if(_options.noSpecial) 	cases.push({"regex": "(?=" + CHARSETS.specialSet + ")",
+				//									"message": "Password can not contain a Special character"});
+				/* else */ 	cases.push({"regex": "(?=" + ("[" + CHARSETS.specialSet + "][^" + CHARSETS.specialSet + "]*").repeat(_options.minSpecial) + ")",
+									"message": "Password must contain at least " + _options.minSpecial + " Special characters."});
 
-				if(_options.noExtended) cases.push({"regex": "(?=" + CHARSETS.extendedSet + ")",
-													"message": "Password can not contain an Extended UTF8 Character"});
-				else 	cases.push({"regex": "(?=" + ("[" + CHARSETS.extendedSet + "][^" + CHARSETS.extendedSet + "]*").repeat(_options.minExtended) + ")",
-									"message": "Password must contain at least " + _options.minExtended + " Extended UTF8 Characters."});
+				//if(_options.noExtended) cases.push({"regex": "(?=" + CHARSETS.extendedSet + ")",
+				//									"message": "Password can not contain an Extended UTF8 character"});
+				/* else */ 	cases.push({"regex": "(?=" + ("[" + CHARSETS.extendedSet + "][^" + CHARSETS.extendedSet + "]*").repeat(_options.minExtended) + ")",
+									"message": "Password must contain at least " + _options.minExtended + " Extended UTF8 characters."});
 
-				if(_options.noProblem) 	cases.push({"regex": "(?=" + CHARSETS.problemSet + ")",
-													"message": "Password can not contain a space, double quote, single quote, slash, backslash or grave Character"});
-				else 	cases.push({"regex": "(?=" + ("[" + CHARSETS.problemSet + "][^" + CHARSETS.problemSet + "]*").repeat(_options.minProblem) + ")",
-									"message": "Password must contain at least " + _options.minProblem + " space, double quote, single quote, slash, backslash or grave Character"});
+				//if(_options.noProblem) 	cases.push({"regex": "(?=" + CHARSETS.problemSet + ")",
+				//									"message": "Password can not contain a space, double quote, single quote, slash, backslash or grave accent character"});
+				/* else */ 	cases.push({"regex": "(?=" + ("[" + CHARSETS.problemSet + "][^" + CHARSETS.problemSet + "]*").repeat(_options.minProblem) + ")",
+									"message": "Password must contain at least " + _options.minProblem + " space, double quote, single quote, slash, backslash or grave character"});
 
 				cases.push({"regex":"[" + charsetToString() + "]{" + _options.minLength + ",}",
-							"message":"Password must contain at least " + _options.minLength + " characters"});
+							"message":"Password must contain at least " + _options.minLength + " characters."});
 
 				return cases;
 			}
