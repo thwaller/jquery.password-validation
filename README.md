@@ -2,13 +2,15 @@
 
 JQuery plugin for password validation per a defined rule set.
 
+Test it: [demo/demo.html](demo/demo.html)
+
 ## Purpose
 
 The goal is to provide a base for those in need of policy enforcement on passwords. Provide a large set of customization options and criteria that can be set, enabled or disabled as needed to provide a universal and scalable piece of code. The HTML file provides entry for the password and verification of password, along with a dynamic criteria satisfaction list. The requirements are listed out and will disappear as the conditions are met, during which the field boxes will be red. When the conditions are all met, the field boxes will be green and the password is valid. The HTML is provided simply to test the code and needs to be adjusted depending on how you want to implement.
 
 ## Character Sets
 
-Addressing the full UTF8 encoding table U+0000 to U+00FF (x00 to xFF) into logical groups.
+Addressing the UTF8 encoding table U+0000 to U+00FF (x00 to xFF) into logical groups.
 
 1. All UpperCase (Ascii/Unicode)  
    `upperCaseSet: "A-Z"`
@@ -28,4 +30,6 @@ Addressing the full UTF8 encoding table U+0000 to U+00FF (x00 to xFF) into logic
 
 ## Items to Address
 
-1. 
+1. `failConsecutive` is not working as intended.
+2. Restricting the first and last character not yet working.
+3. Need to ensure that characters entered do not leave the x00 to xFF range.
