@@ -2,7 +2,7 @@
 
 JQuery plugin for password validation per a defined rule set.
 
-Test it: [demo/demo.html](demo/demo.html)
+Test it: [demo/demo.html](https://thwaller.github.io/jquery.password-validation/demo/demo.html)
 
 ## Purpose
 
@@ -11,6 +11,8 @@ The goal is to provide a base for those in need of policy enforcement on passwor
 ## Character Sets
 
 Addressing the UTF8 encoding table U+0000 to U+00FF (x00 to xFF) into logical groups.
+
+Reference the stated character set here [UTF8 encoding table] (https://www.utf8-chartable.de/).
 
 1. All UpperCase (Ascii/Unicode)  
    `upperCaseSet: "A-Z"`
